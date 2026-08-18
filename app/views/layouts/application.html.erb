@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Bookers2" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+
+    <script src="https://kit.fontawesome.com/d6ff5c477b.js" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <%= javascript_importmap_tags %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoYz1HhZLk2c5k2e1z9gI7E0p4Yx04ecqC2Bz0QK7AjI4a" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <%= link_to "Bookers", root_path, class: "navbar-brand" %>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="ms-auto">
+              <ul class="navbar-nav">
+                <% if authenticated? %>
+                  <li class="nav-item"><%= link_to "<i class='fa-solid fa-house'></i>Home".html_safe, user_path(Current.user), class: "nav-link" %></li>
+                  <li class="nav-item"><%= link_to "<i class='fa-solid fa-users'></i>Users".html_safe, users_path, class: "nav-link" %></li>
+                  <li class="nav-item"><%= link_to "<i class='fa-solid fa-book-open'></i>Books".html_safe, books_path, class: "nav-link" %></li>
+                  <%= button_to "Log out", session_path, method: :delete, class: "nav-link btn btn-link p-0" %>
+                <% else %>
+                  <li class="nav-item"><%= link_to "<i class='fa-solid fa-house'></i>Home".html_safe, root_path, class: "nav-link" %></li>
+                  <li class="nav-item"><%= link_to "<i class='fa-solid fa-link'></i>Users".html_safe, homes_about_path, class: "nav-link" %></li>
+                  <li class="nav-item"><%= link_to "<i class='fa-solid fa-user-plus'></i>Sign up".html_safe, new_user_path, class: "nav-link" %></li>
+                  <li class="nav-item"><%= link_to "<i class='fa-solid fa-right-to-bracket'></i>Log in".html_safe, new_session_path, class: "nav-link" %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div><%= flash[:notice] %></div>
+      <div class="container">
+        <div class="row">
+          <%= yield %>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col text-center">
+            <p>CopyRight Infratop.inc</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
