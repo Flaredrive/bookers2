@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_login
+  allow_unauthenticated_access only: %i[ new create ]
+  #skip_before_action :require_login
 
   def new
   end
@@ -7,8 +8,8 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(name: params[:name])
     if user&.authenticate(params[:password])
-      session[:user_id] = user.id
-      redirect_to homes_about_path, notice: "signed in successfully."
+      start_new_session_for user
+      redirect_to user_path(user), notice: "signed in successfully."
     else
       flash.now[:alert] = "Try another name or password."
       render :new, status: :unprocessable_entity
@@ -16,7 +17,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    terminate_session
     redirect_to homes_about_path, notice: "signed out successfully."
   end
 end

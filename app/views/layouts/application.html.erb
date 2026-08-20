@@ -39,7 +39,9 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <div class="ms-auto">
               <ul class="navbar-nav">
-                <% if authenticated? %>
+<% pp Current.user %>
+<% pp authenticated? %>
+              <% if authenticated? %>
                   <li class="nav-item"><%= link_to "<i class='fa-solid fa-house'></i>Home".html_safe, user_path(Current.user), class: "nav-link" %></li>
                   <li class="nav-item"><%= link_to "<i class='fa-solid fa-users'></i>Users".html_safe, users_path, class: "nav-link" %></li>
                   <li class="nav-item"><%= link_to "<i class='fa-solid fa-book-open'></i>Books".html_safe, books_path, class: "nav-link" %></li>

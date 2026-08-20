@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
-  include ActionController::Cookies
-  include ActionController::RequestForgeryProtection
-  protect_from_forgery with: :exception
+  include Authentication
+  #include ActionController::Cookies
+  #include ActionController::RequestForgeryProtection
+  #protect_from_forgery with: :exception
   allow_browser versions: :modern
 
-  before_action :set_current_user
-  before_action :require_login
+  #before_action :set_current_user
+  #before_action :require_login
 
   def set_current_user
     Current.user = User.find_by(id: session[:user_id])
