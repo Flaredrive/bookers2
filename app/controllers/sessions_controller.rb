@@ -12,12 +12,12 @@ class SessionsController < ApplicationController
       redirect_to user_path(user), notice: "signed in successfully."
     else
       flash.now[:alert] = "Try another name or password."
-      render :new, status: :unprocessable_entity
+      redirect_to new_session_path
     end
   end
 
   def destroy
     terminate_session
-    redirect_to homes_about_path, notice: "signed out successfully."
+    redirect_to root_path, notice: "signed out successfully."
   end
 end

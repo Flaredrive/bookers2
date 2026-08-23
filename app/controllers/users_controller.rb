@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     if @user != Current.user
-      redirect_to books_path
+      redirect_to user_path(Current.user)
     end
   end
 
@@ -43,7 +43,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    pp Current.user
     @user = User.find(params[:id])
     @books = @user.books
     @book = Book.new

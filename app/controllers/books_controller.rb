@@ -16,10 +16,11 @@ class BooksController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:user_id])
     @book = Book.find(params[:id])
+    @user = @book.user
     if @user != Current.user
       redirect_to books_path
+    end
   end
 
   def create
@@ -35,18 +36,16 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:user_id])
     book = Book.find(params[:id])
     book.destroy
-    redirect_to user_books_path(@user)
+    redirect_to books_path
   end
 
   def update
-    @user = User.find(params[:user_id])
     @book = Book.find(params[:id])
     if @book.update(book_params)
       flash[:notice] = "You have updated book successfully."
-      redirect_to user_book_path(@user, @book)
+      redirect_to book_path(@book)
     else
       render :edit
     end

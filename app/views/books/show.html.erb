@@ -1,14 +1,20 @@
-<%= render 'books/template', book: @book %>
+<%= render 'books/template', book: Book.new %>
 <div class="col-md-8 offset-md-1">
   <h2>Book detail</h2>
   <table class="table">
     <tbody>
-      <td><%= image_tag @user.get_profile_image(100, 100) %></td>
+      <td>
+        <%= link_to user_path(@book.user) do %>
+          <%= image_tag @book.user.get_profile_image(100, 100) %>
+          <p><%= @book.user.name %></p>
+        <% end %>
+      </td>
       <td><%= link_to @book.title, books_path(@book) %></td>
       <td><%= @book.body %></td>
       <% if @user == Current.user %>
         <td><%= link_to "Edit", edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
-        <td><%= link_to "Destroy", books_path(@book), data: { turbo_method: :delete }, class: "btn btn-sm btn-danger" %></td>
+        <td><%= link_to "Destroy", book_path(@book), data: { turbo_method: :delete }, class: "btn btn-sm btn-danger" %></td>
+        <%# <td><%= button_to "Destroy", book_path(@book), method: :delete, class: "btn btn-sm btn-danger" %></td> %>
       <% end %>
     </tbody>
   </table>
